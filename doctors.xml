@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Doctor>
+        
+    <Doctor>
+                
+        <ID>JQKXK</ID>
+                
+        <name>reww</name>
+                
+        <password>1254</password>
+                
+        <patients>35643;11111</patients>
+            
+    </Doctor>
+    
+    <Doctor>
+        <ID>FORHI</ID>
+        <name>reww</name>
+        <password>1254</password>
+        <patients>34268;11111</patients>
+    </Doctor>
+</Doctor>
