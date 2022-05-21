@@ -3,7 +3,6 @@ package progmodbeadando.fio;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import progmodbeadando.business.ClassNameAnn;
 import progmodbeadando.business.FileName;
 import progmodbeadando.business.GetterFunctionName;
 
@@ -15,57 +14,52 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 public class Fio <T>{
 
-    public void save(T object){
+    T object;
+
+    public Fio(T object){
+        this.object = object;
+    }
+
+    public void save(ArrayList<T> list){
         try{
-            Class clazz = object.getClass();
-            System.out.println(clazz.getSimpleName());
-            System.out.println(object.getClass().getAnnotation(FileName.class).fileName());
             File f = new File(object.getClass().getAnnotation(FileName.class).fileName());
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            System.out.println("1");
-            Document xml = db.parse(f);
-            System.out.println("2");
+            Document xml = db.newDocument();
             Element root = xml.createElement(object.getClass().getSimpleName());
+            xml.appendChild(root);
             Field[] superFields = object.getClass().getSuperclass().getDeclaredFields();
-            for(Field superField: superFields){
-                System.out.println("asd");
-                if(superField.getAnnotation(GetterFunctionName.class).name() != null){
-                    System.out.println("asdasd");
-                    String gfn = superField.getAnnotation(GetterFunctionName.class).name();
-                    Method gm = object.getClass().getSuperclass().getMethod(gfn);
-                    String value = gm.invoke(object).toString();
-                    String name = superField.getName();
-                    System.out.println(name + " " + value);
-                    Element element = xml.createElement(name);
-                    element.setTextContent(value);
-                    root.appendChild(element);
-                }
-                System.out.println();
-            }
             Field[] Fields = object.getClass().getDeclaredFields();
-            for(Field Field: Fields){
-                System.out.println("asdasdasd");
-                if(Field.getAnnotation(GetterFunctionName.class).name() != null){
-                    System.out.println("asdasdasdasd");
-                    String gfn = Field.getAnnotation(GetterFunctionName.class).name();
-                    Method gm = object.getClass().getMethod(gfn);
-                    String value = gm.invoke(object).toString();
-                    String name = Field.getName();
-                    System.out.println(name + " " + value);
-                    Element element = xml.createElement(name);
-                    element.setTextContent(value);
-                    root.appendChild(element);
+            for(T t : list) {
+                for (Field superField : superFields) {
+                    if (superField.getAnnotation(GetterFunctionName.class).name() != null) {
+                        String gfn = superField.getAnnotation(GetterFunctionName.class).name();
+                        Method gm = object.getClass().getSuperclass().getMethod(gfn);
+                        String value = gm.invoke(t).toString();
+                        String name = superField.getName();
+                        Element element = xml.createElement(name);
+                        element.setTextContent(value);
+                        root.appendChild(element);
+                    }
                 }
-                System.out.println();
+                for (Field Field : Fields) {
+                    if (Field.getAnnotation(GetterFunctionName.class).name() != null) {
+                        String gfn = Field.getAnnotation(GetterFunctionName.class).name();
+                        Method gm = object.getClass().getMethod(gfn);
+                        String value = gm.invoke(t).toString();
+                        String name = Field.getName();
+                        Element element = xml.createElement(name);
+                        element.setTextContent(value);
+                        root.appendChild(element);
+                    }
+                }
             }
-            xml.getFirstChild().appendChild(root);
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer t = tf.newTransformer();
             DOMSource s = new DOMSource(xml);
@@ -80,4 +74,6 @@ public class Fio <T>{
             System.out.println(ex);
         }
     }
+
+
 }

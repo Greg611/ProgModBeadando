@@ -12,8 +12,11 @@ public class Doctor extends Person {
     @GetterFunctionName(name="getPatientsAsString")
     private ArrayList<String> patients;
 
-    public Doctor(String name,String password, ArrayList<String> patients){
-        this.ID = newDoctorId();
+    public Doctor() {
+    }
+
+    public Doctor(String name, String password, ArrayList<String> patients){
+        this.ID = newDoctorId(new ArrayList<>());
         this.name = name;
         this.password = password;
         this.patients = patients;
@@ -40,7 +43,7 @@ public class Doctor extends Person {
         return result;
     }
 
-    private static String newDoctorId(){
+    private static String newDoctorId(ArrayList<Doctor> list){
         String ID = "";
         Boolean B = true;
         while (B) {
@@ -50,7 +53,15 @@ public class Doctor extends Person {
                     IDElement =(char) (rnd.nextInt(26)+'A');
                 ID = ID + IDElement;
             }
-            B = false;
+            int i;
+            for(i=0;i<list.size();i++){
+                if(ID.equals(list.get(i).getID())){
+                    break;
+                }
+            }
+            if(i==list.size()){
+                B=false;
+            }
         }
         return ID;
     }

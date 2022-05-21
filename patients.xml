@@ -1,53 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Patient>
-            
-    
-    <Patient>
-                        
-        
-        <ID>82865</ID>
-                        
-        
-        <name>asd</name>
-                        
-        
-        <birthYear>1</birthYear>
-                        
-        
-        <bloodType>A_Negative</bloodType>
-                        
-        
-        <checkInDate>5</checkInDate>
-                        
-        
-        <diseases>asd;rew</diseases>
-                    
-    
-    </Patient>
-        
-    
-    <Patient>
-                
-        <ID>35643</ID>
-                
-        <name>asd</name>
-                
-        <birthYear>1</birthYear>
-                
-        <bloodType>A_Negative</bloodType>
-                
-        <checkInDate>5</checkInDate>
-                
-        <diseases>asd;rew</diseases>
-            
-    </Patient>
-    
-    <Patient>
-        <ID>34268</ID>
-        <name>asd</name>
-        <birthYear>1</birthYear>
-        <bloodType>A_Negative</bloodType>
-        <checkInDate>5</checkInDate>
-        <diseases>asd;rew</diseases>
-    </Patient>
+    <ID>53763</ID>
+    <name>asd</name>
+    <birthYear>1</birthYear>
+    <bloodType>A-</bloodType>
+    <checkInDate>2022-05-21</checkInDate>
+    <diseases>asd;rew</diseases>
 </Patient>
