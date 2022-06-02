@@ -3,6 +3,8 @@ package progmodbeadando.fio;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import progmodbeadando.business.FileName;
 import progmodbeadando.business.GetterFunctionName;
 
@@ -32,11 +34,13 @@ public class Fio <T>{
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document xml = db.newDocument();
-            Element root = xml.createElement(object.getClass().getSimpleName());
+            Element root = xml.createElement(object.getClass().getSimpleName() + "s");
             xml.appendChild(root);
             Field[] superFields = object.getClass().getSuperclass().getDeclaredFields();
             Field[] Fields = object.getClass().getDeclaredFields();
             for(T t : list) {
+                Element nameElement = xml.createElement(object.getClass().getSimpleName());
+                root.appendChild(nameElement);
                 for (Field superField : superFields) {
                     if (superField.getAnnotation(GetterFunctionName.class).name() != null) {
                         String gfn = superField.getAnnotation(GetterFunctionName.class).name();
@@ -45,7 +49,7 @@ public class Fio <T>{
                         String name = superField.getName();
                         Element element = xml.createElement(name);
                         element.setTextContent(value);
-                        root.appendChild(element);
+                        nameElement.appendChild(element);
                     }
                 }
                 for (Field Field : Fields) {
@@ -56,7 +60,7 @@ public class Fio <T>{
                         String name = Field.getName();
                         Element element = xml.createElement(name);
                         element.setTextContent(value);
-                        root.appendChild(element);
+                        nameElement.appendChild(element);
                     }
                 }
             }
@@ -68,11 +72,42 @@ public class Fio <T>{
             t.transform(s, r);
         }
         catch(Exception ex){
-            System.out.println("Hiba" + ex.getStackTrace());
-            System.out.println(ex.toString());
-            System.out.println(ex.getCause());
-            System.out.println(ex);
+            System.out.println(ex.getLocalizedMessage());
         }
+    }
+
+    public ArrayList<ArrayList> read(){
+        ArrayList<ArrayList> result = new ArrayList<>();
+
+        try{
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(object.getClass().getAnnotation(FileName.class).fileName());
+            Element rootElement = document.getDocumentElement();
+            NodeList childNodesList = rootElement.getChildNodes();
+            Node node;
+
+            for(int i=0;i<childNodesList.getLength();i++) {
+                node = childNodesList.item(i);
+                ArrayList<String> nodes = new ArrayList<>();
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                    NodeList childNodesOfTag = node.getChildNodes();
+                    for (int j = 0; j < childNodesOfTag.getLength(); j++) {
+                        if (childNodesOfTag.item(j).getNodeType() == Node.ELEMENT_NODE) {
+                            nodes.add(childNodesOfTag.item(j).getTextContent());
+                        }
+
+                    }
+                    result.add(nodes);
+                }
+
+            }
+        }
+        catch(Exception ex){
+            System.err.println(ex);
+        }
+        return result;
     }
 
 

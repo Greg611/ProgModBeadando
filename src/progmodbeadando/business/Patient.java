@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import progmodbeadando.business.os.Person;
+import progmodbeadando.fio.Fio;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -38,12 +39,12 @@ public class Patient extends Person {
         this.diseases = diseases;
     }
 
-    public Patient(String ID, String name,Integer birthYear, String bloodType, Date checkInDate, String diseases) {
+    public Patient(String ID, String name,String birthYear, String bloodType, String checkInDate, String diseases) {
         this.ID = ID;
         this.name = name;
-        this.birthYear = birthYear;
+        this.birthYear = Integer.parseInt(birthYear);
         this.bloodType = BloodTypeEnum.findByValue(bloodType);
-        this.checkInDate = checkInDate;
+        this.checkInDate = Date.valueOf(checkInDate);
         this.diseases = getListFromString(diseases);
     }
 
@@ -102,47 +103,14 @@ public class Patient extends Person {
         return result;
     }
 
-    public boolean read(String path, ArrayList<Patient> list){
-        try {
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document document = documentBuilder.parse(path);
-            Element rootElement = document.getDocumentElement();
-            NodeList childNodesList = rootElement.getChildNodes();
-            Node node;
-
-            for(int i=0;i<childNodesList.getLength();i++) {
-                node = childNodesList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                   String diseases = "";
-                    NodeList childNodesOfPatientTag = node.getChildNodes();
-                    String name="",birthYear ="",checkInDate = "",ID = "", bloodType = "";
-                    for(int j = 0;j<childNodesOfPatientTag.getLength();j++){
-                        if(childNodesOfPatientTag.item(j).getNodeType()==Node.ELEMENT_NODE){
-                            switch (childNodesOfPatientTag.item(j).getNodeName()){
-                                case "ID": ID=childNodesOfPatientTag.item(j).getTextContent();break;
-                                case "name": name=childNodesOfPatientTag.item(j).getTextContent();break;
-                                case "birthYear":birthYear=childNodesOfPatientTag.item(j).getTextContent();break;
-                                case "bloodType":bloodType=childNodesOfPatientTag.item(j).getTextContent();break;
-                                case "checkInDate":checkInDate=childNodesOfPatientTag.item(j).getTextContent();break;
-                                case "disease": diseases=(childNodesOfPatientTag.item(j).getTextContent());break;
-                            }
-                        }
-                    }
-
-                    list.add(new Patient(ID,name,Integer.parseInt(birthYear), bloodType, Date.valueOf(checkInDate),diseases));
-                }
-            }
-            return true;
+    public static ArrayList<Patient> read(){
+        ArrayList<Patient> result = new ArrayList<>();
+        Fio<Patient> patientFio = new Fio<>(new Patient());
+        ArrayList<ArrayList> list = patientFio.read();
+        for(int i=0;i<list.size();i++){
+            result.add(new Patient(list.get(i).get(0).toString(),list.get(i).get(1).toString(),list.get(i).get(2).toString(),list.get(i).get(3).toString(),list.get(i).get(4).toString(),list.get(i).get(5).toString()));
         }
-        catch(FileNotFoundException e){
-            System.err.println("A fájl nem létezik, ezért a program nem tud elindulni.");
-            return false;
-        }
-        catch(Exception e){
-            System.err.println("Olvasási hiba   "+e + "\n" + e.getStackTrace() + "\n" + e.getCause() + "\n" + e.getMessage());
-            return false;
-        }
+        return result;
     }
 
     private static String newPatientId(ArrayList<Patient> list) {
