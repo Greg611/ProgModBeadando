@@ -11,7 +11,7 @@
         <ID>UFICP</ID>
         <name>asd</name>
         <password>dsa</password>
-        <patients>12345;11111</patients>
+        <patients>12345;11111;86277</patients>
         <access>false</access>
     </Doctor>
 </Doctors>

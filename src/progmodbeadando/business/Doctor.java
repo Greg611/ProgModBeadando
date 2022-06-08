@@ -7,7 +7,7 @@ import progmodbeadando.business.os.Person;
 import progmodbeadando.fio.Fio;
 
 @ReadMethodName(name="read")
-@SaveMethodName(name="saveDoctors")
+@SaveMethodName(name="save")
 @FileName(fileName = "doctors.xml")
 public class Doctor extends Person {
     @GetterFunctionName(name="getPassword")
@@ -17,17 +17,18 @@ public class Doctor extends Person {
     @GetterFunctionName(name="getAccessAsString")
     private Boolean access;
 
-    public Doctor() {
-        this.ID = "AAAAA";
-        this.name = "admin";
-        this.password = "12345";
-        this.patients = new ArrayList<>();
-        this.patients.add("None");
-        this.access = true;
+    public Doctor() {}
+
+    public Doctor(ArrayList<String> list, ArrayList<Doctor> doctors){
+        this.ID = newDoctorId(doctors);
+        this.name = list.get(0);
+        this.password = list.get(1);
+        this.patients = getListFromString(list.get(2));
+        this.access = Boolean.valueOf(list.get(3));
     }
 
-    public Doctor(String name, String password, ArrayList<String> patients,String access){
-        this.ID = newDoctorId(new ArrayList<>());
+    public Doctor(String name, String password, ArrayList<String> patients,String access, ArrayList<Doctor> doctors){
+        this.ID = newDoctorId(doctors);
         this.name = name;
         this.password = password;
         this.patients = patients;
@@ -42,7 +43,7 @@ public class Doctor extends Person {
         this.access = Boolean.valueOf(access);
     }
 
-    public static void saveDoctors(ArrayList<Doctor> list){
+    public static void save(ArrayList<Doctor> list){
         Fio<Doctor> doctorFio = new Fio<>(new Doctor());
         doctorFio.save(list);
     }
@@ -51,13 +52,10 @@ public class Doctor extends Person {
         ArrayList<Doctor> result = new ArrayList<>();
         Fio<Doctor> doctorFio = new Fio<>(new Doctor());
         ArrayList<ArrayList> list = doctorFio.read();
-        System.out.println("asd");
-        System.out.println(list.get(0).get(4).toString());
-        System.out.println(Boolean.valueOf(list.get(0).get(4).toString()));
         for(int i=0;i<list.size();i++){
             result.add(new Doctor(list.get(i).get(0).toString(),list.get(i).get(1).toString(),list.get(i).get(2).toString(),list.get(i).get(3).toString(),list.get(i).get(4).toString()));
+            //result.add(new Doctor(list.get(i).get(0).toString(),list.get(i).get(1).toString(),list.get(i).get(2).toString(),list.get(i).get(3).toString(),list.get(i).get(4).toString()));
         }
-        System.out.println("asd");
         return result;
     }
 
@@ -130,6 +128,14 @@ public class Doctor extends Person {
             }
         }
         return ID;
+    }
+
+    public void addNewPatient(String ID){
+        this.patients.add(ID);
+    }
+
+    public void removePatient(String ID){
+        this.patients.remove(ID);
     }
 
     @Override

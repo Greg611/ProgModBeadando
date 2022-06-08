@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Patient>
-    <ID>53763</ID>
-    <name>asd</name>
-    <birthYear>1</birthYear>
-    <bloodType>A-</bloodType>
-    <checkInDate>2022-05-21</checkInDate>
-    <diseases>asd;rew</diseases>
-</Patient>
+<Patients>
+    <Patient>
+        <ID>12345</ID>
+        <name>Nagy Béla</name>
+        <birthYear>2000</birthYear>
+        <bloodType>A-</bloodType>
+        <checkInDate>2022-05-21</checkInDate>
+        <diseases>Fejfájás</diseases>
+    </Patient>
+    <Patient>
+        <ID>11111</ID>
+        <name>Kiss Pista</name>
+        <birthYear>1980</birthYear>
+        <bloodType>0-</bloodType>
+        <checkInDate>2022-06-03</checkInDate>
+        <diseases>Artériás vérzés;Hányinger</diseases>
+    </Patient>
+    <Patient>
+        <ID>86277</ID>
+        <name>Horváth Géza</name>
+        <birthYear>1998</birthYear>
+        <bloodType>AB+</bloodType>
+        <checkInDate>2022-06-08</checkInDate>
+        <diseases>Hányinger;Fejfájás;Izomfájdalom</diseases>
+    </Patient>
+</Patients>

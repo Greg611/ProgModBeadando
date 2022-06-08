@@ -16,6 +16,8 @@ import progmodbeadando.fio.Fio;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+@SaveMethodName(name = "save")
+@ReadMethodName(name = "read")
 @FileName(fileName = "patients.xml")
 public class Patient extends Person {
     @GetterFunctionName(name = "getBirthYear")
@@ -28,6 +30,15 @@ public class Patient extends Person {
     private ArrayList<String> diseases;
 
     public Patient() {
+    }
+
+    public Patient(ArrayList<String> list,ArrayList<Patient> patients){
+        this.ID = newPatientId(patients);
+        this.name=list.get(0);
+        this.birthYear = Integer.parseInt(list.get(1));
+        this.bloodType = BloodTypeEnum.findByValue(list.get(2));
+        this.checkInDate = Date.valueOf(list.get(3));
+        this.diseases = getListFromString(list.get(4));
     }
 
     public Patient(String name, Integer birthYear, BloodTypeEnum bloodType, Date checkInDate, ArrayList<String> diseases) {
@@ -68,6 +79,22 @@ public class Patient extends Person {
         return diseases;
     }
 
+    public void setBirthYear(String birthYear) {
+        this.birthYear = Integer.parseInt(birthYear);
+    }
+
+    public void setBloodType(String bloodType) {
+        this.bloodType = BloodTypeEnum.findByValue(bloodType);
+    }
+
+    public void setCheckInDate(String checkInDate) {
+        this.checkInDate = Date.valueOf(checkInDate);
+    }
+
+    public void setDiseases(String diseases) {
+        this.diseases = getListFromString(diseases);
+    }
+
     private ArrayList<String> getListFromString(String string){
         ArrayList result = new ArrayList<>();
         ArrayList<Integer> tokens = new ArrayList<>();
@@ -103,10 +130,16 @@ public class Patient extends Person {
         return result;
     }
 
+    public static void save(ArrayList<Patient> list){
+        Fio<Patient> patientFio = new Fio<>(new Patient());
+        patientFio.save(list);
+    }
+
     public static ArrayList<Patient> read(){
         ArrayList<Patient> result = new ArrayList<>();
         Fio<Patient> patientFio = new Fio<>(new Patient());
         ArrayList<ArrayList> list = patientFio.read();
+        System.out.println("ads");
         for(int i=0;i<list.size();i++){
             result.add(new Patient(list.get(i).get(0).toString(),list.get(i).get(1).toString(),list.get(i).get(2).toString(),list.get(i).get(3).toString(),list.get(i).get(4).toString(),list.get(i).get(5).toString()));
         }
@@ -138,5 +171,14 @@ public class Patient extends Person {
             }
         }
         return ID;
+    }
+
+    public static Patient newObject(ArrayList<String> list,ArrayList<Patient> patients){
+        return new Patient(list, patients);
+    }
+
+    @Override
+    public String toString(){
+        return this.ID + "   " + this.name;
     }
 }
