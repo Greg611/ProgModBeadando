@@ -1,5 +1,6 @@
 package progmodbeadando.business;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,14 +18,20 @@ public class Doctor extends Person {
     @GetterFunctionName(name="getAccessAsString")
     private Boolean access;
 
-    public Doctor() {}
+    public Doctor() {
+        this.ID="AAAAA";
+        this.password = "12345";
+        this.name = "admin";
+        this.patients = new ArrayList<>();
+        this.access = true;
+    }
 
     public Doctor(ArrayList<String> list, ArrayList<Doctor> doctors){
         this.ID = newDoctorId(doctors);
         this.name = list.get(0);
         this.password = list.get(1);
-        this.patients = getListFromString(list.get(2));
-        this.access = Boolean.valueOf(list.get(3));
+        this.patients = new ArrayList<>();
+        this.access = Boolean.valueOf(list.get(2));
     }
 
     public Doctor(String name, String password, ArrayList<String> patients,String access, ArrayList<Doctor> doctors){
@@ -84,6 +91,10 @@ public class Doctor extends Person {
         return access.toString();
     }
 
+    public Boolean getAccess(){
+        return this.access;
+    }
+
     private ArrayList<String> getListFromString(String string){
         ArrayList result = new ArrayList<>();
         ArrayList<Integer> tokens = new ArrayList<>();
@@ -107,6 +118,14 @@ public class Doctor extends Person {
         return result;
     }
 
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public void setAccess(){
+        this.access=!this.access;
+    }
+
     private static String newDoctorId(ArrayList<Doctor> list){
         String ID = "";
         Boolean B = true;
@@ -128,6 +147,10 @@ public class Doctor extends Person {
             }
         }
         return ID;
+    }
+
+    public static Doctor newObject(ArrayList<String> list,ArrayList<Doctor> doctors){
+        return new Doctor(list,doctors);
     }
 
     public void addNewPatient(String ID){
