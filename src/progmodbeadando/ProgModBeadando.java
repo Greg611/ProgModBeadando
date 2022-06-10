@@ -84,8 +84,8 @@ public class ProgModBeadando {
                         ArrayList<String> newPatient = new ArrayList<>();
                         System.out.println("Adja meg a páciens nevét:");
                         newPatient.add(scn.nextLine());
-                        System.out.println("Adja meg a páciens születési évét:");
-                        newPatient.add(scn.nextLine());
+                        Integer newBirthYear = readIntegerFromConsole("Adja meg a páciens születési évét:");
+                        newPatient.add(newBirthYear.toString());
                         System.out.println("Adja meg a páciens vércsoportját(0-,A+,stb.):");
                         newPatient.add(scn.nextLine());
                         Date now = Date.valueOf(LocalDate.now());
@@ -140,8 +140,8 @@ public class ProgModBeadando {
                                 modify.setName(modifyValue);
                                 break;
                             case 2:
-                                System.out.println("Adja meg az új születési évet:");
-                                modifyValue = scn.nextLine();
+                                Integer modifyValueint = readIntegerFromConsole("Adja meg az új születési évet:");
+                                modifyValue = modifyValueint.toString();
                                 modify.setBirthYear(modifyValue);
                                 break;
                             case 3:
@@ -240,8 +240,8 @@ public class ProgModBeadando {
                         ArrayList<String> newPatient = new ArrayList<>();
                         System.out.println("Adja meg a páciens nevét:");
                         newPatient.add(scn.nextLine());
-                        System.out.println("Adja meg a páciens születési évét:");
-                        newPatient.add(scn.nextLine());
+                        Integer newBirthYear = readIntegerFromConsole("Adja meg a páciens születési évét:");
+                        newPatient.add(newBirthYear.toString());
                         System.out.println("Adja meg a páciens vércsoportját(0-,A+,stb.):");
                         newPatient.add(scn.nextLine());
                         Date now = Date.valueOf(LocalDate.now());
@@ -296,8 +296,8 @@ public class ProgModBeadando {
                                 modifyValue = scn.nextLine();
                                 modify.setName(modifyValue);
                             case 2:
-                                System.out.println("Adja meg az új születési évet:");
-                                modifyValue = scn.nextLine();
+                                Integer modifyValueint = readIntegerFromConsole("Adja meg az új születési évet:");
+                                modifyValue = modifyValueint.toString();
                                 modify.setBirthYear(modifyValue);
                             case 3:
                                 System.out.println("Adja meg az új vércsoportot(0+,A-,stb.):");
