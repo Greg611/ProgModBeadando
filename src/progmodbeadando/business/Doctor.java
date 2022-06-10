@@ -103,9 +103,6 @@ public class Doctor extends Person {
             }
         }
         tokens.add(string.length());
-        for(int i=0;i<tokens.size();i++){
-            System.out.println(tokens.get(i));
-        }
         for(int i = 0;i<tokens.size();i++){
             if(i==0){
                 result.add(string.substring(0, tokens.get(i)));

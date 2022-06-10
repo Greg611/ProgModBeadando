@@ -104,9 +104,6 @@ public class Patient extends Person {
             }
         }
         tokens.add(string.length());
-        for(int i=0;i<tokens.size();i++){
-            System.out.println(tokens.get(i));
-        }
         for(int i = 0;i<tokens.size();i++){
             if(i==0){
                 result.add(string.substring(0, tokens.get(i)));
@@ -139,7 +136,6 @@ public class Patient extends Person {
         ArrayList<Patient> result = new ArrayList<>();
         Fio<Patient> patientFio = new Fio<>(new Patient());
         ArrayList<ArrayList> list = patientFio.read();
-        System.out.println("ads");
         for(int i=0;i<list.size();i++){
             result.add(new Patient(list.get(i).get(0).toString(),list.get(i).get(1).toString(),list.get(i).get(2).toString(),list.get(i).get(3).toString(),list.get(i).get(4).toString(),list.get(i).get(5).toString()));
         }
