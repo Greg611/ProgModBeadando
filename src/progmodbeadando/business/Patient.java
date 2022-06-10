@@ -179,6 +179,10 @@ public class Patient extends Person {
 
     @Override
     public String toString(){
-        return this.ID + "   " + this.name;
+        String result = this.ID + "   " + this.name + " " + this.birthYear + " " + this.checkInDate + " " + this.bloodType + "\n Panaszok:";
+        for(int i = 0;i<this.diseases.size();i++){
+            result = result + diseases.get(i) + " ";
+        }
+        return result;
     }
 }

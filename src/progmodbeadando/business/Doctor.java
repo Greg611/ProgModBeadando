@@ -61,7 +61,6 @@ public class Doctor extends Person {
         ArrayList<ArrayList> list = doctorFio.read();
         for(int i=0;i<list.size();i++){
             result.add(new Doctor(list.get(i).get(0).toString(),list.get(i).get(1).toString(),list.get(i).get(2).toString(),list.get(i).get(3).toString(),list.get(i).get(4).toString()));
-            //result.add(new Doctor(list.get(i).get(0).toString(),list.get(i).get(1).toString(),list.get(i).get(2).toString(),list.get(i).get(3).toString(),list.get(i).get(4).toString()));
         }
         return result;
     }
@@ -163,6 +162,6 @@ public class Doctor extends Person {
 
     @Override
     public String toString(){
-        return this.ID + "   " + this.name;
+        return this.ID + "   " + this.name + " " + this.password + " " + this.access;
     }
 }
