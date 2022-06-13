@@ -159,6 +159,6 @@ public class Doctor extends Person {
 
     @Override
     public String toString(){
-        return this.ID + "   " + this.name + " " + this.password + " " + this.access;
+        return this.ID + "\t" + this.name + " " + this.password + " " + this.access;
     }
 }

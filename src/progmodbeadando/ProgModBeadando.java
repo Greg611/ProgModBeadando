@@ -37,7 +37,7 @@ public class ProgModBeadando {
                 System.out.println("Helytelen belépési adatok");
             } else {
                 b = true;
-                System.out.println(logged);
+                System.out.println(logged.getID() + "\t" + logged.getName());
             }
         }
         ArrayList<Patient> allp = ps.read();

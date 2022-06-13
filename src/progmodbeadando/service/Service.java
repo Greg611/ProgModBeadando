@@ -16,8 +16,13 @@ public class Service <T>{
     public Service(T object){ this.object = object; }
 
     public void list(ArrayList<T> list){
-        for(T element : list){
-            System.out.println(element.toString());
+        if(list.size()==0){
+            System.out.println("A kért listának nincsenek elemei.");
+        }
+        else {
+            for (T element : list) {
+                System.out.println(element.toString());
+            }
         }
     }
 
